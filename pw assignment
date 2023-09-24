@@ -1,0 +1,123 @@
+Support Vector  Machines-2
+Assignment Questions 
+Assignment 
+Q1. What is the relationship between polynomial functions and kernel functions in machine learning  algorithms? 
+Think of the polynomial kernel as a helpful tool that uses the ideas from polynomial functions to solve a specific type of problem. It's like using a cool calculator (the kernel) that's good at handling problems related to polynomial functions.
+When we're dealing with data that isn't straightforward (like a straight line), the polynomial kernel can help us find hidden patterns by looking at the data in a clever way, somewhat similar to what polynomial functions do. This helps us solve complex problems efficiently without going through the long process of actually using polynomial functions directly.
+
+Q2. How can we implement an SVM with a polynomial kernel in Python using Scikit-learn? 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_classification
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score,classification_report
+x,y=make_classification( n_samples=1000,
+    n_features=2,n_classes=2, random_state=42, n_redundant=0)
+x_train,x_test,y_train,y_test=train_test_split(x,y,random_state=42,test_size=0.33)
+clf=SVC(kernel='poly', degree=3)
+clf.fit(x_train,y_train)
+y_pred=clf.predict(x_test)
+accuracy=accuracy_score(y_pred,y_test)
+print(accuracy)
+
+
+Q3. How does increasing the value of epsilon affect the number of support vectors in SVR? 
+In Support Vector Regression (SVR), the parameter e(epsilon) determines the margin of tolerance around the regression function. It's a crucial hyperparameter that influences the SVR model's complexity and the number of support vectors.
+Here's how increasing the value of ϵ affects the number of support vectors:
+Larger ϵ values:
+When ϵ is larger, the margin of tolerance around the regression function becomes wider.
+The SVR model is less sensitive to errors within this wider margin.
+As the margin widens, more data points are likely to fall within it and not be treated as support vectors.
+Consequently, increasing ϵ may result in fewer support vectors.
+Smaller  ϵ values:
+When ϵ is smaller, the margin of tolerance becomes narrower.
+The SVR model is more sensitive to errors within this narrower margin.
+As the margin narrows, fewer data points are allowed within it, increasing the likelihood of considering more data points as support vectors.
+Therefore, decreasing ϵ may result in more support vectors.
+In summary, larger ϵ values lead to a wider margin and potentially fewer support vectors, while smaller ϵ values result in a narrower margin and potentially more support vectors.
+
+Q4. How does the choice of kernel function, C parameter, epsilon parameter, and gamma parameter  affect the performance of Support Vector Regression (SVR)? Can you explain how each parameter works  and provide examples of when you might want to increase or decrease its value? 
+Support Vector Regression (SVR) is influenced by several parameters: the choice of kernel function,C parameter, ϵ parameter, and γ parameter. Each of these parameters plays a critical role in shaping the SVR model and ultimately affects its performance.
+Let's delve into each parameter and discuss how they affect the SVR model and when you might want to increase or decrease their values:
+1. Kernel Function:
+The kernel function defines the type of mapping used to transform the input data into a higher-dimensional space. Common choices include linear, polynomial, and radial basis function (RBF) kernels.
+Linear Kernel:
+Effect: Assumes the data is linearly separable in the higher-dimensional space.
+Use Case: Use when the data is expected to have a linear relationship.
+Polynomial Kernel:
+Effect: Maps data into a higher-dimensional space using a polynomial function.
+Use Case: Use when data has a non-linear relationship, and you believe the relationship follows a polynomial curve.
+2. C Parameter:
+The C parameter controls the trade-off between maximizing the margin and minimizing the error. A smaller C allows a wider margin, while a larger C penalizes misclassifications.
+Effect of C:
+Smaller C: A softer margin, potentially more support vectors, more tolerance for misclassifications.
+Larger C: A harder margin, potentially fewer support vectors, less tolerance for misclassifications.
+Epsilon (ϵ) Parameter:
+The ϵ parameter determines the margin of tolerance around the regression function in SVR.
+Effect of ϵ:
+Larger ϵ: Wider margin of tolerance, potentially fewer support vectors.
+Smaller ϵ: Narrower margin of tolerance, potentially more support vectors.
+When to Increase or Decrease Values:
+Kernel Choice:
+Increase complexity (e.g., switch to polynomial or RBF) if the data is non-linearly separable.
+Decrease complexity (e.g., switch to linear) for linearly separable data to reduce model complexity.
+C Parameter:
+Increase C when you want a more complex model and have confidence in the training data (potentially a harder margin).
+Decrease C to allow more misclassifications and create a simpler model (potentially a softer margin).
+Epsilon (ϵ) Parameter:
+Increase ϵ for a wider margin of tolerance and potentially fewer support vectors.
+Decrease ϵ for a narrower margin of tolerance and potentially more support vectors.
+
+
+
+Q5. Assignment: 
+L Import the necessary libraries and load the datasegt 
+L Split the dataset into training and testing setZ 
+L Preprocess the data using any technique of your choice (e.g. scaling, normaliMationK L Create an instance of the SVC classifier and train it on the training data
+L hse the trained classifier to predict the labels of the testing data
+L Evaluate the performance of the classifier using any metric of your choice (e.g. accuracy,  precision, recall, F1-scoreK 
+L Tune the hyperparameters of the SVC classifier using GridSearchCV or RandomiMedSearchCV to  improve its performanc_ 
+L Train the tuned classifier on the entire dataseg 
+L Save the trained classifier to a file for future use. 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import make_classification
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score,classification_report
+from sklearn.datasets import load_iris
+iris=load_iris()
+data=iris.data
+df=pd.DataFrame(data,columns=features)
+features=iris.feature_names
+target=iris.target
+df['target']=target
+x=df.iloc[:,:-1]
+y=df['target']
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.33, random_state=42)
+clf=SVC()
+clf.fit(x_train,y_train)
+y_pred=clf.predict(x_test)
+accuracy=accuracy_score(y_pred,y_test)
+print(accuracy)
+report=classification_report(y_pred,y_test)
+print(report)
+
+parameters = {'kernel':('linear', 'rbf'), 'C':[1, 10]}
+clf_1=GridSearchCV(clf, param_grid=parameters)
+clf_1.fit(x_train,y_train)
+y_pred=clf_1.predict(x_test)
+accuracy=accuracy_score(y_pred,y_test)
+print(accuracy)
+
+
+Note: 
+ You can use any dataset of your choice for this assignment, but make sure it is suitable for  
+
+classification and has a sufficient number of features and samples. 
+Note:  Create your assignment in Jupyter notebook and upload it to GitHub & share that github repository  link through your dashboard. Make sure the repository is public.
+Data Science Masters 
